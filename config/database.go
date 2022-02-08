@@ -30,4 +30,5 @@ func migration(db *gorm.DB) {
 	db.AutoMigrate(models.Stay{})
 	db.AutoMigrate(models.StayRoom{})
 	db.AutoMigrate(models.Price{})
+	db.AutoMigrate(models.Promo{})
 }
