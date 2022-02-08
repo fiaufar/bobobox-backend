@@ -5,7 +5,6 @@ import (
 	"assignment/services"
 	"assignment/structs"
 	"encoding/json"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
 	"net/http"
@@ -56,26 +55,19 @@ func (db *InDB) CheckPromo(c *gin.Context) {
 		requestData structs.PromoRequest
 		result      gin.H
 	)
+
 	jsonData, err := ioutil.ReadAll(c.Request.Body)
-	//var x map[string]interface{}
 	json.Unmarshal([]byte(string(jsonData)), &requestData)
-	//postData := c.PostForm("checkin_date")
-	fmt.Println(requestData)
+
 	requestData.Room, requestData.TotalPrice = services.CalculatePromo(db.DB, requestData.Room, requestData.TotalPrice, requestData.PromoId)
-
-	//checkinDate := c.Query("checkin_date")
-	//checkoutDate := c.Query("checkout_date")
-	//roomTypeId := c.Query("room_type_id")
-
-	//err := db.DB.Preload("Prices", "date IN (?)", []string{checkinDate, checkoutDate}).Where("room_status = 'available'").Where("room_type_id = ?", roomTypeId).Find(&data).Error
 
 	if err != nil {
 		result = gin.H{
-			"available_room": err.Error(),
+			"result": err.Error(),
 		}
 	} else {
 		result = gin.H{
-			"available_room": requestData,
+			"result": requestData,
 		}
 	}
 

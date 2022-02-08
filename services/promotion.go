@@ -10,6 +10,7 @@ import (
 
 var DB *gorm.DB
 
+// CalculatePromo Function for calculate Promo Price
 func CalculatePromo(db *gorm.DB, rooms []models.Room, totalPrice int, promoId uint) ([]models.Room, int) {
 	DB = db
 	fmt.Println("CALCULATE PROMO")
@@ -62,6 +63,7 @@ func CalculatePromo(db *gorm.DB, rooms []models.Room, totalPrice int, promoId ui
 	}
 }
 
+// CheckPromoQuota Function for Check the Promo's Quota available
 func CheckPromoQuota(promo models.Promo, date string) bool {
 	var stays []models.Reservation
 	DB.Where("checkin_date <= ? AND checkout_date >= ?", date, date).Find(&stays)
@@ -76,13 +78,13 @@ func CheckPromoQuota(promo models.Promo, date string) bool {
 	return true
 }
 
+//CheckPromoRules Function to check the promo Rules
 func CheckPromoRules(promo models.Promo, night int, room int, checkin string) bool {
 	checkinDate, _ := time.Parse("01-01-2001", checkin)
 	currTimestamp := time.Now()
 	bookingHourStart := time.Date(currTimestamp.Year(), currTimestamp.Month(), currTimestamp.Day(), promo.BookingHourStart, 0, 0, 0, currTimestamp.Location())
 	bookingHourEnd := time.Date(currTimestamp.Year(), currTimestamp.Month(), currTimestamp.Day(), promo.BookingHourEnd, 0, 0, 0, currTimestamp.Location())
 
-	//fmt.Println("promo.CheckinDay:", promo.CheckinDay, "string(checkinDate.Weekday()) : ", checkinDate.Weekday().String(), "strings.Contains(promo.CheckinDay, checkinDate.Weekday().String())", !strings.Contains(promo.CheckinDay, checkinDate.Weekday().String()), "promo.MinimumNight:", promo.MinimumNight, "night:", night, promo.MinimumNight > night, "promo.MinimumRoom:", promo.MinimumRoom, "Room:", room, promo.MinimumRoom > room)
 	if !strings.Contains(promo.CheckinDay, checkinDate.Weekday().String()) || promo.MinimumNight > night || promo.MinimumRoom > room {
 		fmt.Println("!strings.Contains(promo.CheckinDay, string(checkinDate.Weekday())) || promo.MinimumNight > night || promo.MinimumRoom > room")
 		return false
