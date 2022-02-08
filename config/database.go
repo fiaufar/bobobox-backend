@@ -6,7 +6,13 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
+var db *gorm.DB = nil
+
 func InitDB() *gorm.DB {
+	if db != nil {
+		return db
+	}
+
 	dbName := "bobobox_assignment"
 	user := "root"
 	password := ""

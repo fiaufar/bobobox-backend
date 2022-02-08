@@ -12,6 +12,6 @@ type Promo struct {
 	PromoQuota       int
 	CheckinDay       string
 	BookingDay       string
-	BookingHourStart string
-	BookingHourEnd   string
+	BookingHourStart int
+	BookingHourEnd   int
 }

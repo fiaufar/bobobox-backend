@@ -13,5 +13,6 @@ func InitRouter(db *gorm.DB) *gin.Engine {
 	}
 
 	router.GET("/room", inDb.GetRoomAvailable)
+	router.POST("/room", inDb.CheckPromo)
 	return router
 }
