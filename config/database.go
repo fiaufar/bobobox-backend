@@ -1,6 +1,7 @@
 package config
 
 import (
+	"assignment/models"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
@@ -17,5 +18,16 @@ func InitDB() *gorm.DB {
 		panic("Failed to connect to database")
 	}
 
+	migration(db)
 	return db
+}
+
+func migration(db *gorm.DB) {
+	db.AutoMigrate(models.Hotel{})
+	db.AutoMigrate(models.Room{})
+	db.AutoMigrate(models.RoomType{})
+	db.AutoMigrate(models.Reservation{})
+	db.AutoMigrate(models.Stay{})
+	db.AutoMigrate(models.StayRoom{})
+	db.AutoMigrate(models.Price{})
 }
