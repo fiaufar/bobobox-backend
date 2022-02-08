@@ -9,6 +9,7 @@ type Promo struct {
 	Currency         int
 	MinimumNight     int
 	MinimumRoom      int
+	PromoQuota       int
 	CheckinDay       string
 	BookingDay       string
 	BookingHourStart string
