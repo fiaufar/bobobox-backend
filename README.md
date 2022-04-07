@@ -1,4 +1,4 @@
-## Bobobox Assignment
+## Simple Hotel Backend App
 
 How to run project : 
 
